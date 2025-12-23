@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="InternshipMoodle.Application/InternshipMoodle.Application.csproj" />
+  <Project Path="InternshipMoodle.Domain/InternshipMoodle.Domain.csproj" />
+  <Project Path="InternshipMoodle.Infrastructure/InternshipMoodle.Infrastructure.csproj" />
+  <Project Path="InternshipMoodle.Presentation/InternshipMoodle.Presentation.csproj" />
+</Solution>
