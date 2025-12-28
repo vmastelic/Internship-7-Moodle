@@ -10,4 +10,8 @@
     <ProjectReference Include="..\InternshipMoodle.Domain\InternshipMoodle.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+  </ItemGroup>
+
 </Project>

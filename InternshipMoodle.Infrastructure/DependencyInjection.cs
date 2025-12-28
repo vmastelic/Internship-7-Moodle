@@ -1,4 +1,6 @@
-﻿using InternshipMoodle.Infrastructure.Persistence;
+﻿using InternshipMoodle.Application.Auth;
+using InternshipMoodle.Application.Common;
+using InternshipMoodle.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,10 +14,15 @@ namespace InternshipMoodle.Infrastructure
             IConfiguration configuration)
         {
             services.AddDbContext<AppDbContext>(options =>
-                options.UseNpgsql(
-                    configuration.GetConnectionString("Default")));
+                options.UseNpgsql(configuration.GetConnectionString("Default")));
+
+            services.AddScoped<IAppDbContext>(provider =>
+                provider.GetRequiredService<AppDbContext>());
+
+            services.AddScoped<AuthService>();
 
             return services;
         }
+
     }
 }
