@@ -2,6 +2,7 @@
 using InternshipMoodle.Infrastructure;
 using InternshipMoodle.Infrastructure.Persistence;
 using InternshipMoodle.Infrastructure.Persistence.Seed;
+using InternshipMoodle.Presentation.Menus;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
@@ -19,4 +20,11 @@ using var scope = host.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 await DatabaseSeeder.SeedAsync(context);
 
-Console.WriteLine("Application started successfully.");
+var authMenu = new AuthMenu(
+    scope.ServiceProvider.GetRequiredService<AuthService>()
+);
+
+await authMenu.ShowAsync();
+var mainMenu = new MainMenu();
+await mainMenu.ShowAsync();
+
