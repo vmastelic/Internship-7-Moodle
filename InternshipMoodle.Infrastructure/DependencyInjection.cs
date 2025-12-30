@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using InternshipMoodle.Application.Students;
+using InternshipMoodle.Application.Professors;
+
 
 
 namespace InternshipMoodle.Infrastructure
@@ -23,6 +25,7 @@ namespace InternshipMoodle.Infrastructure
 
             services.AddScoped<AuthService>();
             services.AddScoped<StudentCourseService>();
+            services.AddScoped<ProfessorCourseService>();
 
             return services;
         }

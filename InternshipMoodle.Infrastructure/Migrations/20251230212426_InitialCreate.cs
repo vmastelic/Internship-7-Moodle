@@ -83,7 +83,8 @@ namespace InternshipMoodle.Infrastructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CourseId = table.Column<int>(type: "integer", nullable: false),
-                    StudentId = table.Column<int>(type: "integer", nullable: false)
+                    StudentId = table.Column<int>(type: "integer", nullable: false),
+                    CourseId1 = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -94,6 +95,11 @@ namespace InternshipMoodle.Infrastructure.Migrations
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Enrollments_Courses_CourseId1",
+                        column: x => x.CourseId1,
+                        principalTable: "Courses",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Enrollments_Users_StudentId",
                         column: x => x.StudentId,
@@ -163,6 +169,11 @@ namespace InternshipMoodle.Infrastructure.Migrations
                 table: "Enrollments",
                 columns: new[] { "CourseId", "StudentId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Enrollments_CourseId1",
+                table: "Enrollments",
+                column: "CourseId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enrollments_StudentId",

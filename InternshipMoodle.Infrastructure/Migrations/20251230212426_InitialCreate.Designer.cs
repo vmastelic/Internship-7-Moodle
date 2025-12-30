@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InternshipMoodle.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251223121447_InitialCreate")]
+    [Migration("20251230212426_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -58,10 +58,15 @@ namespace InternshipMoodle.Infrastructure.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("integer");
 
+                    b.Property<int?>("CourseId1")
+                        .HasColumnType("integer");
+
                     b.Property<int>("StudentId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CourseId1");
 
                     b.HasIndex("StudentId");
 
@@ -213,6 +218,10 @@ namespace InternshipMoodle.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("InternshipMoodle.Domain.Entities.Courses.Course", null)
+                        .WithMany("Enrollments")
+                        .HasForeignKey("CourseId1");
+
                     b.HasOne("InternshipMoodle.Domain.Entities.Users.User", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
@@ -227,7 +236,7 @@ namespace InternshipMoodle.Infrastructure.Migrations
             modelBuilder.Entity("InternshipMoodle.Domain.Entities.Materials.Material", b =>
                 {
                     b.HasOne("InternshipMoodle.Domain.Entities.Courses.Course", "Course")
-                        .WithMany()
+                        .WithMany("Materials")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -257,7 +266,7 @@ namespace InternshipMoodle.Infrastructure.Migrations
             modelBuilder.Entity("InternshipMoodle.Domain.Entities.Notifications.Notification", b =>
                 {
                     b.HasOne("InternshipMoodle.Domain.Entities.Courses.Course", "Course")
-                        .WithMany()
+                        .WithMany("Notifications")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -271,6 +280,15 @@ namespace InternshipMoodle.Infrastructure.Migrations
                     b.Navigation("Course");
 
                     b.Navigation("Professor");
+                });
+
+            modelBuilder.Entity("InternshipMoodle.Domain.Entities.Courses.Course", b =>
+                {
+                    b.Navigation("Enrollments");
+
+                    b.Navigation("Materials");
+
+                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

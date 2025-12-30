@@ -1,4 +1,5 @@
-﻿using InternshipMoodle.Application.Students;
+﻿using InternshipMoodle.Application.Professors;
+using InternshipMoodle.Application.Students;
 using InternshipMoodle.Domain.Enums;
 using InternshipMoodle.Presentation.Session;
 
@@ -7,10 +8,12 @@ namespace InternshipMoodle.Presentation.Menus
     public class MainMenu
     {
         private readonly StudentCourseService _studentCourseService;
+        private readonly ProfessorCourseService _professorCourseService;
 
-        public MainMenu(StudentCourseService studentCourseService)
+        public MainMenu(StudentCourseService studentCourseService, ProfessorCourseService professorCourseService)
         {
             _studentCourseService = studentCourseService;
+            _professorCourseService = professorCourseService;
         }
 
         public async Task ShowAsync()
@@ -69,7 +72,7 @@ namespace InternshipMoodle.Presentation.Menus
             }
         }
 
-        private void ShowProfessorMenu()
+        private async Task ShowProfessorMenu()
         {
             Console.WriteLine("1. Moji kolegiji");
             Console.WriteLine("2. Upravljanje kolegijima");
@@ -82,7 +85,9 @@ namespace InternshipMoodle.Presentation.Menus
             switch (input)
             {
                 case "1":
-                    Placeholder("Moji kolegiji (Profesor)");
+                    var menu = new ProfessorCoursesMenu(_professorCourseService);
+                    await menu.ShowAsync();
+
                     break;
 
                 case "2":
