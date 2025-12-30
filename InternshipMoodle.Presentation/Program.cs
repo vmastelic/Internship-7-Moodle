@@ -1,4 +1,5 @@
 ﻿using InternshipMoodle.Application.Auth;
+using InternshipMoodle.Application.Students;
 using InternshipMoodle.Infrastructure;
 using InternshipMoodle.Infrastructure.Persistence;
 using InternshipMoodle.Infrastructure.Persistence.Seed;
@@ -25,6 +26,10 @@ var authMenu = new AuthMenu(
 );
 
 await authMenu.ShowAsync();
-var mainMenu = new MainMenu();
+
+var mainMenu = new MainMenu(
+    scope.ServiceProvider.GetRequiredService<StudentCourseService>()
+);
+
 await mainMenu.ShowAsync();
 

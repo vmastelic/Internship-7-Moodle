@@ -1,10 +1,18 @@
-﻿using InternshipMoodle.Domain.Enums;
+﻿using InternshipMoodle.Application.Students;
+using InternshipMoodle.Domain.Enums;
 using InternshipMoodle.Presentation.Session;
 
 namespace InternshipMoodle.Presentation.Menus
 {
     public class MainMenu
     {
+        private readonly StudentCourseService _studentCourseService;
+
+        public MainMenu(StudentCourseService studentCourseService)
+        {
+            _studentCourseService = studentCourseService;
+        }
+
         public async Task ShowAsync()
         {
             while (UserSession.IsAuthenticated)
@@ -12,8 +20,7 @@ namespace InternshipMoodle.Presentation.Menus
                 Console.Clear();
 
                 var role = UserSession.CurrentUser!.Role;
-
-                Console.WriteLine($"=== GLAVNI MENI ({role}) ===");
+                Console.WriteLine($"=== GLAVNI MENI ({role}) ===\n");
 
                 switch (role)
                 {
@@ -22,30 +29,30 @@ namespace InternshipMoodle.Presentation.Menus
                         break;
 
                     case UserRole.Professor:
-                        await ShowProfessorMenu();
+                        ShowProfessorMenu();
                         break;
 
                     case UserRole.Admin:
-                        await ShowAdminMenu();
+                        ShowAdminMenu();
                         break;
                 }
             }
         }
-
 
         private async Task ShowStudentMenu()
         {
             Console.WriteLine("1. Moji kolegiji");
             Console.WriteLine("2. Privatni chat");
             Console.WriteLine("0. Odjava");
-            Console.Write("Odabir: ");
+            Console.Write("\nOdabir: ");
 
             var input = Console.ReadLine();
 
             switch (input)
             {
                 case "1":
-                    Placeholder("Moji kolegiji (Student)");
+                    var menu = new StudentCoursesMenu(_studentCourseService);
+                    await menu.ShowAsync();
                     break;
 
                 case "2":
@@ -60,18 +67,15 @@ namespace InternshipMoodle.Presentation.Menus
                     Error();
                     break;
             }
-
-            await Task.CompletedTask;
         }
 
-
-        private async Task ShowProfessorMenu()
+        private void ShowProfessorMenu()
         {
             Console.WriteLine("1. Moji kolegiji");
             Console.WriteLine("2. Upravljanje kolegijima");
             Console.WriteLine("3. Privatni chat");
             Console.WriteLine("0. Odjava");
-            Console.Write("Odabir: ");
+            Console.Write("\nOdabir: ");
 
             var input = Console.ReadLine();
 
@@ -97,17 +101,14 @@ namespace InternshipMoodle.Presentation.Menus
                     Error();
                     break;
             }
-
-            await Task.CompletedTask;
         }
 
-
-        private async Task ShowAdminMenu()
+        private void ShowAdminMenu()
         {
             Console.WriteLine("1. Upravljanje korisnicima");
             Console.WriteLine("2. Privatni chat");
             Console.WriteLine("0. Odjava");
-            Console.Write("Odabir: ");
+            Console.Write("\nOdabir: ");
 
             var input = Console.ReadLine();
 
@@ -129,27 +130,24 @@ namespace InternshipMoodle.Presentation.Menus
                     Error();
                     break;
             }
-
-            await Task.CompletedTask;
         }
-
 
         private static void Logout()
         {
             UserSession.Logout();
-            Console.WriteLine("Odjavljen si.");
+            Console.WriteLine("\nOdjavljen si.");
             Pause();
         }
 
         private static void Placeholder(string feature)
         {
-            Console.WriteLine($"\n[{feature}]");
+            Console.WriteLine($"\n[{feature}] – dolazi uskoro 🚧");
             Pause();
         }
 
         private static void Error()
         {
-            Console.WriteLine("Neispravan unos.");
+            Console.WriteLine("\nNeispravan unos.");
             Pause();
         }
 

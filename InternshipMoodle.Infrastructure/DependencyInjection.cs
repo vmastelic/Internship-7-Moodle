@@ -4,6 +4,8 @@ using InternshipMoodle.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using InternshipMoodle.Application.Students;
+
 
 namespace InternshipMoodle.Infrastructure
 {
@@ -20,6 +22,7 @@ namespace InternshipMoodle.Infrastructure
                 provider.GetRequiredService<AppDbContext>());
 
             services.AddScoped<AuthService>();
+            services.AddScoped<StudentCourseService>();
 
             return services;
         }
