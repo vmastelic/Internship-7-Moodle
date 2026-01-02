@@ -1,5 +1,7 @@
 ﻿using InternshipMoodle.Application.Auth;
 using InternshipMoodle.Presentation.Session;
+using InternshipMoodle.Presentation.Menus;
+
 
 namespace InternshipMoodle.Presentation.Menus
 {
@@ -19,6 +21,7 @@ namespace InternshipMoodle.Presentation.Menus
                 Console.Clear();
                 Console.WriteLine("=== MOODLE ===");
                 Console.WriteLine("1. Login");
+                Console.WriteLine("2. Registration");
                 Console.WriteLine("0. Izlaz");
                 Console.Write("Odabir: ");
 
@@ -28,6 +31,11 @@ namespace InternshipMoodle.Presentation.Menus
                 {
                     case "1":
                         await LoginAsync();
+                        break;
+
+                    case "2":
+                        var registerMenu = new RegisterMenu(_authService);
+                        await registerMenu.ShowAsync();
                         break;
 
                     case "0":

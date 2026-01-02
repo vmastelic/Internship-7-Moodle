@@ -1,4 +1,5 @@
 ﻿using InternshipMoodle.Application.Common;
+using InternshipMoodle.Application.Common.Validation;
 using InternshipMoodle.Domain.Entities.Users;
 using InternshipMoodle.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,9 @@ namespace InternshipMoodle.Application.Admin
 
         public async Task<bool> UpdateEmailAsync(int userId, string newEmail)
         {
+            if (!ValidationHelper.IsValidEmail(newEmail))
+                return false;
+
             if (await _context.Users.AnyAsync(u => u.Email == newEmail))
                 return false;
 
