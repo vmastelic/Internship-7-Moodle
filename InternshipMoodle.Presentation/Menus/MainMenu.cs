@@ -1,4 +1,5 @@
-﻿using InternshipMoodle.Application.Professors;
+﻿using InternshipMoodle.Application.Chat;
+using InternshipMoodle.Application.Professors;
 using InternshipMoodle.Application.Students;
 using InternshipMoodle.Domain.Enums;
 using InternshipMoodle.Presentation.Session;
@@ -10,12 +11,18 @@ namespace InternshipMoodle.Presentation.Menus
         private readonly StudentCourseService _studentCourseService;
         private readonly ProfessorCourseService _professorCourseService;
         private readonly ProfessorCourseManagementService _professorCourseManagementService;
+        private readonly ChatService _chatService;
 
-        public MainMenu(StudentCourseService studentCourseService, ProfessorCourseService professorCourseService, ProfessorCourseManagementService professorCourseManagementService)
+        public MainMenu(StudentCourseService studentCourseService,
+            ProfessorCourseService professorCourseService,
+            ProfessorCourseManagementService professorCourseManagementService,
+            ChatService chatService
+            )
         {
             _studentCourseService = studentCourseService;
             _professorCourseService = professorCourseService;
             _professorCourseManagementService = professorCourseManagementService;
+            _chatService = chatService;
         }
 
         public async Task ShowAsync()
@@ -38,7 +45,7 @@ namespace InternshipMoodle.Presentation.Menus
                         break;
 
                     case UserRole.Admin:
-                        ShowAdminMenu();
+                        await ShowAdminMenu();
                         break;
                 }
             }
@@ -61,7 +68,8 @@ namespace InternshipMoodle.Presentation.Menus
                     break;
 
                 case "2":
-                    Placeholder("Privatni chat");
+                    var chatMenu = new ChatMenu(_chatService);
+                    await chatMenu.ShowAsync();
                     break;
 
                 case "0":
@@ -99,7 +107,8 @@ namespace InternshipMoodle.Presentation.Menus
                     break;
 
                 case "3":
-                    Placeholder("Privatni chat");
+                    var chatMenu = new ChatMenu(_chatService);
+                    await chatMenu.ShowAsync();
                     break;
 
                 case "0":
@@ -112,7 +121,7 @@ namespace InternshipMoodle.Presentation.Menus
             }
         }
 
-        private void ShowAdminMenu()
+        private async Task ShowAdminMenu()
         {
             Console.WriteLine("1. Upravljanje korisnicima");
             Console.WriteLine("2. Privatni chat");
@@ -128,7 +137,8 @@ namespace InternshipMoodle.Presentation.Menus
                     break;
 
                 case "2":
-                    Placeholder("Privatni chat");
+                    var chatMenu = new ChatMenu(_chatService);
+                    await chatMenu.ShowAsync();
                     break;
 
                 case "0":

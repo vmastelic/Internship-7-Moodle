@@ -1,11 +1,12 @@
 ﻿using InternshipMoodle.Application.Auth;
+using InternshipMoodle.Application.Chat;
 using InternshipMoodle.Application.Common;
+using InternshipMoodle.Application.Professors;
+using InternshipMoodle.Application.Students;
 using InternshipMoodle.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using InternshipMoodle.Application.Students;
-using InternshipMoodle.Application.Professors;
 
 
 
@@ -27,6 +28,8 @@ namespace InternshipMoodle.Infrastructure
             services.AddScoped<StudentCourseService>();
             services.AddScoped<ProfessorCourseService>();
             services.AddScoped<ProfessorCourseManagementService>();
+            services.AddScoped<ChatService>();
+
 
 
             return services;
