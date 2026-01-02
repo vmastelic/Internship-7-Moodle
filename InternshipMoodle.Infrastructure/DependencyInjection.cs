@@ -26,6 +26,8 @@ namespace InternshipMoodle.Infrastructure
             services.AddScoped<AuthService>();
             services.AddScoped<StudentCourseService>();
             services.AddScoped<ProfessorCourseService>();
+            services.AddScoped<ProfessorCourseManagementService>();
+
 
             return services;
         }

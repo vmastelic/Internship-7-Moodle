@@ -9,11 +9,13 @@ namespace InternshipMoodle.Presentation.Menus
     {
         private readonly StudentCourseService _studentCourseService;
         private readonly ProfessorCourseService _professorCourseService;
+        private readonly ProfessorCourseManagementService _professorCourseManagementService;
 
-        public MainMenu(StudentCourseService studentCourseService, ProfessorCourseService professorCourseService)
+        public MainMenu(StudentCourseService studentCourseService, ProfessorCourseService professorCourseService, ProfessorCourseManagementService professorCourseManagementService)
         {
             _studentCourseService = studentCourseService;
             _professorCourseService = professorCourseService;
+            _professorCourseManagementService = professorCourseManagementService;
         }
 
         public async Task ShowAsync()
@@ -32,7 +34,7 @@ namespace InternshipMoodle.Presentation.Menus
                         break;
 
                     case UserRole.Professor:
-                        ShowProfessorMenu();
+                        await ShowProfessorMenu();
                         break;
 
                     case UserRole.Admin:
@@ -85,13 +87,15 @@ namespace InternshipMoodle.Presentation.Menus
             switch (input)
             {
                 case "1":
-                    var menu = new ProfessorCoursesMenu(_professorCourseService);
-                    await menu.ShowAsync();
+                    var coursesMenu = new ProfessorCoursesMenu(_professorCourseService);
+                    await coursesMenu.ShowAsync();
 
                     break;
 
                 case "2":
-                    Placeholder("Upravljanje kolegijima");
+                    var manageMenu = new ManageCoursesMenu(_professorCourseManagementService);
+                    await manageMenu.ShowAsync();
+
                     break;
 
                 case "3":

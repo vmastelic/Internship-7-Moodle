@@ -30,7 +30,8 @@ await authMenu.ShowAsync();
 
 var mainMenu = new MainMenu(
     scope.ServiceProvider.GetRequiredService<StudentCourseService>(),
-    scope.ServiceProvider.GetRequiredService<ProfessorCourseService>()
+    scope.ServiceProvider.GetRequiredService<ProfessorCourseService>(),
+    scope.ServiceProvider.GetRequiredService<ProfessorCourseManagementService>()
 );
 
 
