@@ -1,4 +1,5 @@
-﻿using InternshipMoodle.Application.Auth;
+﻿using InternshipMoodle.Application.Admin;
+using InternshipMoodle.Application.Auth;
 using InternshipMoodle.Application.Chat;
 using InternshipMoodle.Application.Professors;
 using InternshipMoodle.Application.Students;
@@ -33,7 +34,8 @@ var mainMenu = new MainMenu(
     scope.ServiceProvider.GetRequiredService<StudentCourseService>(),
     scope.ServiceProvider.GetRequiredService<ProfessorCourseService>(),
     scope.ServiceProvider.GetRequiredService<ProfessorCourseManagementService>(),
-    scope.ServiceProvider.GetRequiredService<ChatService>()
+    scope.ServiceProvider.GetRequiredService<ChatService>(),
+    scope.ServiceProvider.GetRequiredService<AdminUserService>()
 );
 
 await mainMenu.ShowAsync();

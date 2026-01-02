@@ -1,4 +1,5 @@
-﻿using InternshipMoodle.Application.Chat;
+﻿using InternshipMoodle.Application.Admin;
+using InternshipMoodle.Application.Chat;
 using InternshipMoodle.Application.Professors;
 using InternshipMoodle.Application.Students;
 using InternshipMoodle.Domain.Enums;
@@ -12,17 +13,20 @@ namespace InternshipMoodle.Presentation.Menus
         private readonly ProfessorCourseService _professorCourseService;
         private readonly ProfessorCourseManagementService _professorCourseManagementService;
         private readonly ChatService _chatService;
+        private readonly AdminUserService _adminUserService;
 
         public MainMenu(StudentCourseService studentCourseService,
             ProfessorCourseService professorCourseService,
             ProfessorCourseManagementService professorCourseManagementService,
-            ChatService chatService
+            ChatService chatService,
+            AdminUserService adminUserService
             )
         {
             _studentCourseService = studentCourseService;
             _professorCourseService = professorCourseService;
             _professorCourseManagementService = professorCourseManagementService;
             _chatService = chatService;
+            _adminUserService = adminUserService;
         }
 
         public async Task ShowAsync()
@@ -133,7 +137,8 @@ namespace InternshipMoodle.Presentation.Menus
             switch (input)
             {
                 case "1":
-                    Placeholder("Upravljanje korisnicima");
+                    var menu = new AdminUsersMenu(_adminUserService);
+                    await menu.ShowAsync();
                     break;
 
                 case "2":
@@ -155,12 +160,6 @@ namespace InternshipMoodle.Presentation.Menus
         {
             UserSession.Logout();
             Console.WriteLine("\nOdjavljen si.");
-            Pause();
-        }
-
-        private static void Placeholder(string feature)
-        {
-            Console.WriteLine($"\n[{feature}] – dolazi uskoro 🚧");
             Pause();
         }
 

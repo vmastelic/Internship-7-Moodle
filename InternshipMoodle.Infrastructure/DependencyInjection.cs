@@ -1,4 +1,5 @@
-﻿using InternshipMoodle.Application.Auth;
+﻿using InternshipMoodle.Application.Admin;
+using InternshipMoodle.Application.Auth;
 using InternshipMoodle.Application.Chat;
 using InternshipMoodle.Application.Common;
 using InternshipMoodle.Application.Professors;
@@ -29,8 +30,7 @@ namespace InternshipMoodle.Infrastructure
             services.AddScoped<ProfessorCourseService>();
             services.AddScoped<ProfessorCourseManagementService>();
             services.AddScoped<ChatService>();
-
-
+            services.AddScoped<AdminUserService>();
 
             return services;
         }
